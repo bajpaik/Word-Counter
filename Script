@@ -1,0 +1,61 @@
+# Word-Counter
+This is a word counter widget to work on SP.
+
+
+<!--PEN CODE-->
+<div class="box">
+	<label for="textCount">Word Counter</label>
+	<textarea name="textCount" id="textCount" cols="30" rows="8"></textarea>
+	<p style="text-align: center;">You have <span id="wordCount">0 words</span> and <span id="charCount">0 characters</span></p>
+	<p>
+		<strong>How to use:</strong>
+		<p>
+			Enter or Paste your text into the textbox to a count of characters and words.
+		</p>
+</div>
+
+<script>
+  
+  (function($) {
+	var wordCounter = {
+		init: function() {
+			this.DOM();
+			this.events();
+		},
+		DOM: function() {
+			this.textbox = $("#textCount");
+			this.wordCount = $("#wordCount");
+			this.charCount = $("#charCount");
+		},
+		events: function() {
+			this.textbox.on("input", this.count.bind(this));
+		},
+		count: function() {
+			var words = this.textbox.val().split(" "),
+				chars = this.textbox.val();
+
+			//DELETE EMPTY STRINGS
+			for (var i = 0; i < words.length; i++) {
+				while (words[i] === "") {
+					words.splice(i, 1);
+				}
+			}
+			//COUNT WORDS
+			if (words.length === 1) {
+				this.wordCount.text(words.length + " word");
+			} else {
+				this.wordCount.text(words.length + " words");
+			}
+			//COUNT CHARACTERS
+			if (chars.length < 0) {
+				words = [];
+			} else if (chars.length === 1) {
+				this.charCount.text(chars.length + " character");
+			} else {
+				this.charCount.text(chars.length + " characters");
+			}
+		}
+	}
+	wordCounter.init();
+}(jQuery));
+</script>
